@@ -10,13 +10,8 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/osiolabs/example.git"
+        "url": "https://github.com/Vikaparra/CSV-to-JSON-NodeJs.git"
     },
-    "author": "Jon Church",
-    "contributors": [{
-        "name": "Amber Matz",
-        "email": "example@example.com",
-        "url": "https://www.osiolabs.com/#team"
-    }],
-    "keywords": ["server", "osiolabs", "express", "compression"]
+    "author": "Vitória Parra",
+    "keywords": ["json", "csv", "nodejs", "js"]
 }
