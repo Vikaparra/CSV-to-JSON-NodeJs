@@ -1,0 +1,22 @@
+{
+    "name": "csv-to-json-nodejs",
+    "version": "1.0",
+    "description": "Turning an CSV input into an JSON output.",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/osiolabs/example.git"
+    },
+    "author": "Jon Church",
+    "contributors": [{
+        "name": "Amber Matz",
+        "email": "example@example.com",
+        "url": "https://www.osiolabs.com/#team"
+    }],
+    "keywords": ["server", "osiolabs", "express", "compression"]
+}
