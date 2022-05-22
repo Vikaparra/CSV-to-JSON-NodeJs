@@ -2,7 +2,7 @@
     "name": "csv-to-json-nodejs",
     "version": "1.0",
     "description": "Turning an CSV input into an JSON output.",
-    "main": "src/index.js",
+    "main": "index.js",
     "scripts": {
         "start": "node index.js"
     },
