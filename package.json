@@ -7,13 +7,19 @@
         "start": "node index.js"
     },
     "dependencies": {
+        "awesome-phonenumber": "^3.0.2",
         "csv-parser": "3.0.0",
-        "lodash": "4.17.15"
+        "lodash": "^4.17.21"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/Vikaparra/CSV-to-JSON-NodeJs.git"
     },
     "author": "Vitória Parra",
-    "keywords": ["json", "csv", "nodejs", "js"]
+    "keywords": [
+        "json",
+        "csv",
+        "nodejs",
+        "js"
+    ]
 }
