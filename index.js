@@ -35,7 +35,7 @@ function fillStudents(personInfo){
     lodash.forEach(personInfo, function(value, key){ // Create new addresses for the person
       getAddresses(key, value, students[match]);
     })
-    students[match].setGroups(personInfo);
+    students[match].setGroups(personInfo); // Insert new groups into the groups array
   }
 }
 
@@ -52,8 +52,6 @@ function newPerson (personInfo){
     lodash.forEach(personInfo, function(value, key){ // Adding the addresses  
       getAddresses(key, value, person);
     })
-
-    getGroups(personInfo); // Adding the groups
 
     return person;
 }
@@ -82,8 +80,10 @@ function getAddresses(header, address, person){
 
   let tags = [];
   tags = lodash.split(header,' '); // Separating the tags using the spaces
+
   if(tags[0]==="phone"){ 
     const phoneNumber = ppn.parsePhoneNumber( address, 'BR' );
+    
     if(phoneNumber.isValid()){ 
       let newAddress = phoneNumber.getNumber( 'e164' )
       let withoutChar = lodash.trimStart(newAddress, '+'); // Removing the "+" that the parser puts by default
@@ -95,9 +95,11 @@ function getAddresses(header, address, person){
   else if (tags[0]==="email"){
     const reg = /(?:)?<?(.*?@[^>,: -)(;~]+)>?,?/g; //Regex to format the email address
     let mail;
+    
     while (mail = reg.exec(address)) { // Executing the Regex
       let mails = [];
       mails = lodash.split(mail[1],'/'); // Cheking if there is more than 1 email address on the string 
+     
       for(let i = 0; i < mails.length; i++){ // Saving all the email addresses
         let adr = new Address(tags[0], mails[i])
         adr.setTags(lodash.drop(tags));
@@ -117,6 +119,9 @@ function toBool(param){
     return false;
   }
 }
+
+
+// -------------------- Data Structures ------------------------
 
 class Person {
 
