@@ -71,7 +71,7 @@ function getGroups(personInfo){
 function getAddresses(header, address, person){
 // This function get all the values (address) and keys (header) of the row
 // It splits the keys into tags using the spaces
-// If the first part of the key is phone or email, it saves the values on the Object
+// If the first part of the key is phone or email, it saves the values on an Address object in the respective Person object of the student
 
   let tags = [];
   tags = lodash.split(header,' '); // Separating the tags using the spaces
