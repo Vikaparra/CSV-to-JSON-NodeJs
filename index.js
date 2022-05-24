@@ -61,7 +61,7 @@ function getGroups(personInfo){
   // This finds all columns that start with 'group' and sum their values into a single variable.
   // Also apply a regex match, to create a list of groups in the desired format.
   
-  const sala_rx = /Sala \d*/g; // Regex for Sala
+  const sala_rx = /(([a-zA-Z0-9])+\s\d)|(([a-zA-Z0-9])+)/g; // Regex for Sala
 
   var keys = Object.keys(personInfo)
   var key_groups = lodash.filter(keys, function(o) {return o.slice(0, 5) == "group"})
