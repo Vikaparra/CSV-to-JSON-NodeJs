@@ -42,12 +42,7 @@ function fillStudents(personInfo){
 function newPerson (personInfo){
 // This function will create a new object of Person using the data received from the parser
 
-    const fullname = personInfo.fullname;
-    const eid = personInfo.eid;
-    const invisible = personInfo.invisible;
-    const see_all = personInfo.see_all;
-
-    const person = new Person(fullname,eid,invisible,see_all, personInfo);
+    const person = new Person(personInfo);
 
     lodash.forEach(personInfo, function(value, key){ // Adding the addresses  
       getAddresses(key, value, person);
@@ -132,11 +127,11 @@ class Person {
 // This class will store the information of each registered student
 // There will be one object of Person to each unique eid present on the CSV
 
-    constructor(fullname, eid, invisible, see_all, personInfo){
-        this.fullname = fullname;
-        this.eid = eid;
-        this.invisible = toBool(lodash.trim(invisible, ' '));
-        this.see_all = toBool(lodash.trim(see_all, ' '));
+    constructor(personInfo){
+        this.fullname = personInfo.fullname;
+        this.eid = personInfo.eid;
+        this.invisible = toBool(lodash.trim(personInfo.invisible, ' '));
+        this.see_all = toBool(lodash.trim(personInfo.see_all, ' '));
         this.addresses = [];
         this.groups = lodash.uniq(getGroups(personInfo))  // Get the groups for this student and drop duplicates.
     }
