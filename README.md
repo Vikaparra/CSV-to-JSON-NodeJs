@@ -17,12 +17,14 @@
 #### This program expects one CSV file as the "input.csv"
 * The CSV file must be in the same directory that "index.js"
 #### The output of the program is an JSON file named "output.json"
-#### To run the code you can open the directory where the project is located on your command prompt and run the next command:
+#### To run the code you can open the directory where the project is located on your command prompt and run the next 2 commands:
 ```bash
+npm install package.json
 node index.js
 ```
 #### For example:
 ```bash
 C:\Users\user> cd C:\Users\user\Documents\Projects\CSV-to-JSON-NodeJs\
+C:\Users\user\Documents\Projects\CSV-to-JSON-NodeJs> npm install package.json
 C:\Users\user\Documents\Projects\CSV-to-JSON-NodeJs> node index.js
 ```
