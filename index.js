@@ -110,6 +110,7 @@ function getAddresses(header, address, person){
 
 function toBool(param){
   // Function to turn the params into boolean values
+  
   if((param == "yes")||(param == "1")){
     return true;
   } else if ((param == "no")||(param == "0")){
@@ -123,6 +124,7 @@ function toBool(param){
 // -------------------- Data Structures ------------------------
 
 class Person {
+// This class will store the information of each registered student
 
     constructor(fullname, eid, invisible, see_all, personInfo){
         this.fullname = fullname;
@@ -144,6 +146,7 @@ class Person {
 }
 
 class Address {
+  // This class will store avery address of a person (email or phone)
 
     constructor(type, address){
         this.type = type;
