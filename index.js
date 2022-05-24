@@ -70,7 +70,6 @@ function getGroups(personInfo){
   for(let g of key_groups){
     groups += personInfo[g] + ' '
   }
-
   return groups.match(sala_rx)
 }
 
@@ -112,7 +111,6 @@ function getAddresses(header, address, person){
 
 function toBool(param){
   // Function to turn the params into boolean values
-
   if((param == "yes")||(param == "1")){
     return true;
   } else if ((param == "no")||(param == "0")){
