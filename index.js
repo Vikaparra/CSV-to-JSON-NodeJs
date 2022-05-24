@@ -7,6 +7,9 @@ const students = [];
 
 // -------------- Catching and reading the data ----------------
 
+console.log("----------------------");
+console.log("Starting program, reading 'input.csv'");
+
 fs.createReadStream("input.csv") // Parsing the CSV
   .pipe(
     csv({
@@ -17,9 +20,13 @@ fs.createReadStream("input.csv") // Parsing the CSV
   .on("data", (data) => fillStudents(data)) // For every row
   .on("end", () => {
     const data = JSON.stringify(students);
+    console.log("----------------------");
+    console.log("Writing data in output.json");
     const writing = fs.createWriteStream("output.json");
     writing.write(data);
     writing.end();
+    console.log("----------------------");
+    console.log("Program finished");
   });
 
 function fillStudents(personInfo) {
@@ -32,9 +39,13 @@ function fillStudents(personInfo) {
 
   if (match == -1) {
     // Case there is no existing person with the same eid
+    console.log("----------------------");
+    console.log("Adding new student");
     students.push(newPerson(personInfo));
   } else {
     // Case there is
+    console.log("----------------------");
+    console.log("Adding info to already existent student, eid: ", personInfo.eid);
     lodash.forEach(personInfo, function (value, key) {
       getAddresses(key, value, students[match]);
     });
@@ -92,6 +103,10 @@ function getAddresses(header, address, person) {
       const adr = new Address(tags[0], withoutChar);
       adr.setTags(lodash.drop(tags)); // The "lodash.drop" is being used to remove the "phone" from the tags
       person.setAddress(adr);
+    } else {
+      console.log("----------------------");
+      console.log("Invalid phone number: ", address);
+      console.log("From person: ", person.fullname);
     }
   } else if (tags[0] === "email") {
     const reg = /(?:)?<?(.*?@[^>,: -)(;~]+)>?,?/g; //Regex to format the email address
@@ -107,6 +122,10 @@ function getAddresses(header, address, person) {
           const adr = new Address(tags[0], emails[i]);
           adr.setTags(lodash.drop(tags));
           person.setAddress(adr);
+        } else {
+          console.log("----------------------");
+          console.log("Invalid email address: ", emails[i]);
+          console.log("From person: ", person.fullname);
         }
       }
     }
