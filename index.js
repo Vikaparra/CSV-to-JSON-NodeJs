@@ -72,7 +72,6 @@ function getGroups(personInfo){
   for(let g of key_groups){
     groups += personInfo[g] + ' '
   }
-  console.log(groups.match(sala_rx));
   return groups.match(sala_rx)
 }
 
