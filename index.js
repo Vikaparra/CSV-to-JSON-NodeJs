@@ -2,31 +2,28 @@ const ppn = require('awesome-phonenumber').parsePhoneNumber;
 const csv = require('csv-parser');
 const lodash = require('lodash'); 
 const fs = require('fs');
-const { getgroups } = require('process');
-const results = [];
-let students = [];
+const validator = require("email-validator");
+var students = [];
 
 
 // -------------- Catching and reading the data ----------------
 
-fs.createReadStream('C:\\Users\\k\\Documents\\Estudos\\Programacao\\NodeJs\\CSV-to-JSON-NodeJs\\CSV-to-JSON-NodeJs\\input.csv')
+fs.createReadStream('\input.csv') // Parsing the CSV
   .pipe(csv({
     mapHeaders: ({ header, index }) => header == "group" ? header+index : header  // Rename 'group' columns so no information gets lost.
 }))
-  .on('data', (data) => results.push(data))
+  .on('data', (data) => fillStudents(data)) // For every row
   .on('end', () => {
-
-    lodash.forEach(results, fillStudents); // Reading each row
     
     let data = JSON.stringify(students);
-    const escrita = fs.createWriteStream('output.json');
-    escrita.write(data);
-    escrita.end();
+    const writing = fs.createWriteStream('output.json');
+    writing.write(data);
+    writing.end();
     
   });
 
 function fillStudents(personInfo){
-  var match = lodash.findIndex(students, function(o) { return o.eid == personInfo.eid;});  // This returns -1 if the student is not added yet, returns its index otherwise.
+  let match = lodash.findIndex(students, function(o) { return o.eid == personInfo.eid;});  // This returns -1 if the student is not added yet, returns its index otherwise.
 
   if(match == -1){ // Case there is no existing person with the same eid
     students.push(newPerson(personInfo));
@@ -61,16 +58,16 @@ function getGroups(personInfo){
   // This finds all columns that start with 'group' and sum their values into a single variable.
   // Also apply a regex match, to create a list of groups in the desired format.
   
-  const sala_rx = /(([a-zA-Z0-9])+\s\d)|(([a-zA-Z0-9])+)/g; // Regex for Sala
+  const sala_rx = /((Classe \d*)|(Sala \d*)|(Turma \d*)|(Noturno)|(Diurno)|(Integral))/g; // Regex for Sala
 
-  var keys = Object.keys(personInfo)
-  var key_groups = lodash.filter(keys, function(o) {return o.slice(0, 5) == "group"})
-  var groups = ''
+  let keys = Object.keys(personInfo);
+  let key_groups = lodash.filter(keys, function(o) {return o.slice(0, 5) == "group"});
+  let groups = '';
 
   for(let g of key_groups){
-    groups += personInfo[g] + ' '
+    groups += personInfo[g] + ' '; // Adding the values from each 'group' column to an variable
   }
-  return groups.match(sala_rx)
+  return groups.match(sala_rx);
 }
 
 function getAddresses(header, address, person){
@@ -88,7 +85,7 @@ function getAddresses(header, address, person){
       let newAddress = phoneNumber.getNumber( 'e164' )
       let withoutChar = lodash.trimStart(newAddress, '+'); // Removing the "+" that the parser puts by default
       let adr = new Address(tags[0], withoutChar);
-      adr.setTags(lodash.drop(tags)); // The drop is being used to remove the "phone" from the tags
+      adr.setTags(lodash.drop(tags)); // The "lodash.drop" is being used to remove the "phone" from the tags
       person.setAddress(adr);
     }
   }
@@ -101,9 +98,11 @@ function getAddresses(header, address, person){
       mails = lodash.split(mail[1],'/'); // Cheking if there is more than 1 email address on the string 
      
       for(let i = 0; i < mails.length; i++){ // Saving all the email addresses
-        let adr = new Address(tags[0], mails[i])
-        adr.setTags(lodash.drop(tags));
-        person.setAddress(adr);
+        if(validator.validate(mails[i])){
+          let adr = new Address(tags[0], mails[i])
+          adr.setTags(lodash.drop(tags));
+          person.setAddress(adr);
+        }
       }
     }
   }
@@ -111,6 +110,7 @@ function getAddresses(header, address, person){
 
 function toBool(param){
   // Function to turn the params into boolean values
+  
   if((param == "yes")||(param == "1")){
     return true;
   } else if ((param == "no")||(param == "0")){
@@ -124,6 +124,7 @@ function toBool(param){
 // -------------------- Data Structures ------------------------
 
 class Person {
+// This class will store the information of each registered student
 
     constructor(fullname, eid, invisible, see_all, personInfo){
         this.fullname = fullname;
@@ -145,6 +146,7 @@ class Person {
 }
 
 class Address {
+  // This class will store avery address of a person (email or phone)
 
     constructor(type, address){
         this.type = type;

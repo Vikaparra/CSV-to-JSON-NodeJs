@@ -67,15 +67,6 @@
             },
             {
                 "type": "email",
-                "address": "dad.appleseed1@exemplo",
-                "tags": [
-                    [
-                        "Parent"
-                    ]
-                ]
-            },
-            {
-                "type": "email",
                 "address": "dad.appleseed2@exemplo.com",
                 "tags": [
                     [
