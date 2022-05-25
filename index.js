@@ -45,7 +45,7 @@ function fillStudents(personInfo) {
   } else {
     // Case there is
     console.log("----------------------");
-    console.log("Adding info to already existent student, eid: ", personInfo.eid);
+    console.log("Adding info to already existent student, eid: ", personInfo.eid, "/ Name: ", personInfo.fullname);
     lodash.forEach(personInfo, function (value, key) {
       getAddresses(key, value, students[match]);
     });
@@ -96,36 +96,38 @@ function getAddresses(header, address, person) {
 
   if (tags[0] === "phone") {
     const phoneNumber = ppn.parsePhoneNumber(address, "BR");
-
-    if (phoneNumber.isValid()) {
-      const newAddress = phoneNumber.getNumber("e164");
-      const withoutChar = lodash.trimStart(newAddress, "+"); // Removing the "+" that the parser puts by default
-      const adr = new Address(tags[0], withoutChar);
-      adr.setTags(lodash.drop(tags)); // The "lodash.drop" is being used to remove the "phone" from the tags
-      person.setAddress(adr);
-    } else {
+    if ((address == null) | (address == "")) {
       console.log("----------------------");
-      console.log("Invalid phone number: ", address);
-      console.log("From person: ", person.fullname);
+      console.log("Null phone number from person:", person.fullname, "/ Tag: ", lodash.drop(tags));
+    } else {
+      if (phoneNumber.isValid()) {
+        const newAddress = phoneNumber.getNumber("e164");
+        const withoutChar = lodash.trimStart(newAddress, "+"); // Removing the "+" that the parser puts by default
+        const adr = new Address(tags[0], withoutChar);
+        adr.setTags(lodash.drop(tags)); // The "lodash.drop" is being used to remove the "phone" from the tags
+        person.setAddress(adr);
+      } else {
+        console.log("----------------------");
+        console.log("Invalid phone number:", address, "/ From person:", person.fullname, "/ Tag: ", lodash.drop(tags));
+      }
     }
   } else if (tags[0] === "email") {
-    const reg = /(?:)?<?(.*?@[^>,: -)(;~]+)>?,?/g; //Regex to format the email address
-    let email;
+    const email_reg = /[A-Z0-9%+@._-]+/gi; //Regex to remove caracters that are not valid for emails like "/" or ":"
+    let emails = address.match(email_reg);
 
-    while ((email = reg.exec(address))) {
-      let emails = [];
-      emails = lodash.split(email[1], "/"); // Cheking if there is more than 1 email address on the string
-
-      for (let i = 0; i < emails.length; i++) {
+    if (emails == null) {
+      console.log("----------------------");
+      console.log("Null email from person:", person.fullname, "/ Tag: ", lodash.drop(tags));
+    } else {
+      for (let e of emails) {
         // Saving all the email addresses
-        if (validator.validate(emails[i])) {
-          const adr = new Address(tags[0], emails[i]);
+        if (validator.validate(e)) {
+          const adr = new Address(tags[0], e);
           adr.setTags(lodash.drop(tags));
           person.setAddress(adr);
         } else {
           console.log("----------------------");
-          console.log("Invalid email address: ", emails[i]);
-          console.log("From person: ", person.fullname);
+          console.log("Invalid email address:", e, "/ From person:", person.fullname, "/ Tag: ", lodash.drop(tags));
         }
       }
     }
