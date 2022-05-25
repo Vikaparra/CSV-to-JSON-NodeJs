@@ -28,3 +28,24 @@ C:\Users\user> cd C:\Users\user\Documents\Projects\CSV-to-JSON-NodeJs\
 C:\Users\user\Documents\Projects\CSV-to-JSON-NodeJs> npm install package.json
 C:\Users\user\Documents\Projects\CSV-to-JSON-NodeJs> node index.js
 ```
+## Logs
+#### In the program execution, some logs will be shown in the command prompt
+#### For example:
+```bash
+----------------------
+Starting program, reading 'input.csv'
+----------------------
+Adding new student
+----------------------
+Invalid phone number: kkkkkkk / From person: John Appleseed / Tag:  [ 'Student' ]
+----------------------
+Adding info to already existent student, eid:  104
+----------------------
+Null phone number from person: Kate Goldman / Tag:  [ 'Pedagogical', 'Responsible' ]
+----------------------
+Writing data in output.json
+----------------------
+Program finished
+```
+#### The logs can be used to see what is happening with some of the information
+#### If the log "Program finished" appears, the execution went correctly, if it doesn't, some error happened
