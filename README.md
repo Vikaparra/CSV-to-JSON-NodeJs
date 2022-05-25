@@ -39,9 +39,17 @@ Adding new student
 ----------------------
 Invalid phone number: kkkkkkk / From person: John Appleseed / Tag:  [ 'Student' ]
 ----------------------
-Adding info to already existent student, eid:  104
+Adding info to already existent student, eid:  104 / Name:  John Appleseed
 ----------------------
-Null phone number from person: Kate Goldman / Tag:  [ 'Pedagogical', 'Responsible' ]
+Null email from person: John Appleseed / Tag:  [ 'Financial', 'Responsible' ]
+----------------------
+Null phone number from person: John Appleseed / Tag:  [ 'Financial', 'Responsible' ]
+----------------------
+Adding new student
+----------------------
+Null phone number from person: Mary Knight / Tag:  [ 'Pedagogical', 'Responsible' ]
+----------------------
+Null phone number from person: Mary Knight / Tag:  [ 'Financial', 'Responsible' ]
 ----------------------
 Writing data in output.json
 ----------------------
